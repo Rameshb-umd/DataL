@@ -1,0 +1,8 @@
+BabeIntent say hello
+BabeIntent say hello world
+BabeIntent hello
+BabeIntent say hi
+BabeIntent say hi world
+BabeIntent hi
+BabeIntent how are you
+BabeIntent females in {day}

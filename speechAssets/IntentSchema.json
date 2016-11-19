@@ -1,0 +1,16 @@
+{
+    "intents": [
+        {
+            "intent": "BabeIntent",
+            "slots": [
+                {
+                    "name": "day",
+                    "type": "LIST_OF_YEAR"
+                        }
+                    ]
+    },
+        {
+            "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}
