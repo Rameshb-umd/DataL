@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        var jsonURL = "https://8d1187b9.ngrok.io/visualize/";
+        //        $.getScript(jsonURL); // // function parseResponse(json) { // console.log(json); // }
+        $.getJSON(jsonURL, function (json) {
+            console.log(json + "???");
+            $('#Question').text(json.question);
+            $('#Answer').text(json.answer);
+            console.log(json.urltoDisplay.replace(/"/g, ""));
+            //$("#imageContent").html(json.urltoDisplay);
+            $('#ImagesID').attr("src", json.urltoDisplay.replace(/"/g, ""));
+            //
+        });
+    });
+</script>
+
+<body>
+    <h2>Alexa's Response</h2>
+    <label>Your Question: </label>
+    <b><label id="Question">Hello</label></b>
+    <br>
+    <label>Alexa replied: </label>
+    <b><label id="Answer">hi</label></b>
+    <br>
+    <br>
+    <div id="imageContent">
+        <iframe src="" width="640" height="480" id="ImagesID"></iframe>
+    </div>
+
+</body>
+
+</html>

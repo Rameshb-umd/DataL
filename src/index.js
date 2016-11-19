@@ -49,9 +49,9 @@ Babe.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest,
 
 Babe.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
     console.log("Babe onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
-    var speechOutput = "Welcome, I am your virtual meeting assistant";
-    var repromptText = "Ask me a question and i can anaylze the data and tell you";
-    response.ask(speechOutput, repromptText);
+    var speechOutput = "Welcome, I am your virtual meeting assistant," +
+        "Ask me any question on global entrepreneurship monitor and i can analyze the data and tell you the findings ";
+    response.ask(speechOutput);
 };
 
 Babe.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
@@ -62,12 +62,34 @@ Babe.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, ses
 Babe.prototype.intentHandlers = {
     // register custom intent handlers
     "BabeIntent": function (intent, session, response) {
+
+        var query = intent.slots.Query;
+        var QueryValue;
+        if (query && query.value) {
+            QueryValue = query.value.toLowerCase();
+            connectToWebService(QueryValue, function (message) {
+                response.tellWithCard(message + "", message + "", message + "");
+            });
+        } else {
+            repromptText = "Please try rephrasing the question";
+            speechOutput = "I'm sorry, I didn't understand that Question. ";
+            response.ask(speechOutput, repromptText);
+            return;
+        }
         // Determine custom date
-        response.tellWithCard("Hello Guys!", "Hello Guys!", "Hello Guys!");
+
 
     },
     "AMAZON.HelpIntent": function (intent, session, response) {
-        response.ask("Ask me a question and i can anaylze the data and tell you", "Ask me a question and i can anaylze the data and tell you!");
+        response.ask("Ask me any question on global entrepreneurship monitor and i can analyze the data and tell you the findings");
+    },
+    "AMAZON.StopIntent": function (intent, session, response) {
+        var speechOutput = "Goodbye";
+        response.tell(speechOutput);
+    },
+    "AMAZON.CancelIntent": function (intent, session, response) {
+        var speechOutput = "Goodbye";
+        response.tell(speechOutput);
     }
 };
 
@@ -77,3 +99,18 @@ exports.handler = function (event, context) {
     var babe = new Babe();
     babe.execute(event, context);
 };
+
+
+function connectToWebService(QueryValue, eventCallback) {
+    var http = require('http');
+
+    http.get('http://8d1187b9.ngrok.io?Query=' + QueryValue, function (res) { //Change the webservice Query here
+        console.log("Got response: " + res.statusCode);
+        res.on('data', function (chunk) {
+            eventCallback(chunk + "");
+        });
+    }).on('error', function (e) {
+        console.log("Got error: " + e.message);
+        eventCallback(res.statusCode + "");
+    });
+}

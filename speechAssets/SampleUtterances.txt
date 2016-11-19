@@ -5,4 +5,4 @@ BabeIntent say hi
 BabeIntent say hi world
 BabeIntent hi
 BabeIntent how are you
-BabeIntent females in {day}
+BabeIntent {Query}

@@ -4,10 +4,10 @@
             "intent": "BabeIntent",
             "slots": [
                 {
-                    "name": "day",
-                    "type": "LIST_OF_YEAR"
-                        }
-                    ]
+                    "name": "Query",
+                    "type": "LIST_OF_QUERY"
+                }
+     ]
     },
         {
             "intent": "AMAZON.HelpIntent"
