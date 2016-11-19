@@ -68,7 +68,7 @@ Babe.prototype.intentHandlers = {
         if (query && query.value) {
             QueryValue = query.value.toLowerCase();
             connectToWebService(QueryValue, function (message) {
-                response.tellWithCard(message + "", message + "", message + "");
+                response.tellWithCard(message + ", Please see the visualization on screen", message + ", Please see the visualization on screen", message + ", Please see the visualization on screen");
             });
         } else {
             repromptText = "Please try rephrasing the question";
@@ -104,7 +104,7 @@ exports.handler = function (event, context) {
 function connectToWebService(QueryValue, eventCallback) {
     var http = require('http');
 
-    http.get('http://8d1187b9.ngrok.io?Query=' + QueryValue, function (res) { //Change the webservice Query here
+    http.get('http://bee487f8.ngrok.io?Query=' + QueryValue, function (res) { //Change the webservice Query here
         console.log("Got response: " + res.statusCode);
         res.on('data', function (chunk) {
             eventCallback(chunk + "");
